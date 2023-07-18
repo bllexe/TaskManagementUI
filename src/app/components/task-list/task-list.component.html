@@ -1,0 +1,99 @@
+<main id="main" class="main">
+    <div class="pagetitle">
+       <h1>Task List</h1>
+       <nav>
+          <ol class="breadcrumb">
+             <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+             <li class="breadcrumb-item">Tasks</li>
+             <li class="breadcrumb-item active"><a routerLink="/task-list">Task List</a></li>
+          </ol>
+       </nav>
+    </div>
+
+    <div class="container"  id="main-container">
+      <div class="row">
+          <div class="col-md-12">
+              <div class="card card-white">
+                  <div class="card-body">
+                      <ul class="nav nav-pills todo-nav">
+                          <li role="presentation" class="nav-item all-task active"><a href="#" class="nav-link">All</a></li>
+                          <li role="presentation" class="nav-item active-task"><a href="#" class="nav-link">Active</a></li>
+                          <li role="presentation" class="nav-item completed-task"><a href="#" class="nav-link">Completed</a></li>
+                      </ul>
+                      <div class="todo-list" *ngFor="let task of taskResponse">
+                          <div class="todo-item">
+                           <div class="checker"><span class=""><input type="checkbox" [checked]="task.status === 'DONE'" (change)="UpdateTaskStatus(task)"></span></div>
+                              <span style="margin-left: 4px;"><b><del [ngStyle]="{'text-decoration': task.status === 'DONE' ? 'line-through' : 'none'}">{{task.description}}</del></b></span>
+                              <div class="icon" style="display: flex; justify-content: flex-end;">
+                                 <i class="ri-chat-delete-line" (click)="deleteTask(task.id)"></i>
+                                 <span style="margin: 0 2px;"  ></span>
+                                 <i class="ri-edit-2-fill" (click)="openUpdateModal(task)" data-bs-toggle="modal" data-bs-target="#basicModal"></i>
+                              </div>
+                              <div style="display: flex; flex-direction: column; align-items: flex-end;">
+                                 <span><b>DueDate:</b>{{task.limitDate | date:'MM/dd/yyyy'}}</span>
+                              </div>
+
+                              <span style="font-size: x-small; margin-right: 4px;">Severity: <b>{{task.severity}}</b></span>
+                              <span style="font-size: x-small;">Status:<b>{{task.status}}</b></span>
+                              <span style="font-size: x-small; margin-left: 4px;">Category:<b>{{task.categoryName}}</b></span>
+                              
+                          </div>
+                          
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div> 
+
+ </main>
+
+ <!--update task modal-->
+
+ <div class="modal fade"  id="basicModal" tabindex="-1" aria-hidden="true" >
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title">Update Task</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+         </div>
+         <div class="modal-body">  
+
+            <form #editForm="ngForm" >
+
+               <input type="hidden" ngModel="{{editTask?.id}}" name="id" class="form-control" id="id">
+
+               <div class="row mb-3">
+                  <label for="limitDate" class="col-sm-2 col-form-label">DueDate:</label>
+                  <div class="col-sm-10"> <input  ngModel="{{editTask?.limitDate}}" name="limitDate" type="date" class="form-control"></div>
+               </div>
+
+               <div class="row mb-3">
+                  <label class="col-sm-2 col-form-label">Status:</label>
+                  <div class="col-sm-10">
+                     <select ngModel="{{editTask?.status}}" name="status" class="form-select" aria-label="Default select example">
+                        <option value="ONGOING">ONGOING</option>
+                        <option value="DONE">DONE</option>
+                     </select>
+                  </div>
+               </div>
+
+               <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">Severity:</label>
+                <div class="col-sm-10">
+                   <select ngModel="{{editTask?.severity}}" name="severity" class="form-select" aria-label="Default select example">
+                      <option value="LOW">LOW</option>
+                      <option value="MEDIUM">MEDIUM</option>
+                      <option value="HIGH">HIGH</option>
+                   </select>
+                </div>
+             </div>
+            </form>
+         </div>
+         <div class="modal-footer"> 
+            <button type="button"  class="btn btn-secondary" data-bs-dismiss="modal">Close</button> 
+            <button type="button" [disabled]="editForm.invalid" class="btn btn-primary" (click)="UpdateTask(editForm.value)">Save changes</button></div>
+      </div>
+   </div>
+ </div>
+ 

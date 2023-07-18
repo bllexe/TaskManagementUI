@@ -1,0 +1,129 @@
+<main id="main" class="main">
+    <div class="pagetitle">
+       <h1>Profile</h1>
+       <nav>
+          <ol class="breadcrumb">
+             <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+             <li class="breadcrumb-item">Users</li>
+             <li class="breadcrumb-item active">Profile</li>
+          </ol>
+       </nav>
+    </div>
+    <section class="section profile">
+       <div class="row">
+          <div class="col-xl-4">
+             <div class="card">
+                <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+                   <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
+                   <h2>{{ userResponse?.firstName}}-{{userResponse?.lastName}}</h2>
+                   <h3>{{userResponse?.userName}}</h3>
+                   <div class="social-links mt-2">
+                      <a  class="twitter">
+                        <i class="bi bi-twitter"></i></a> <a class="facebook"><i class="bi bi-facebook">
+                        </i></a> <a  class="instagram"><i class="bi bi-instagram">
+                        </i></a> <a  class="linkedin"><i class="bi bi-linkedin"></i></a></div>
+                </div>
+             </div>
+          </div>
+          <div class="col-xl-8">
+             <div class="card">
+                <div class="card-body pt-3">
+                  <ul class="nav nav-tabs nav-tabs-bordered">
+                     <li class="nav-item"> <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Overview</button></li>
+                     <li class="nav-item"> <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Change Password</button></li>
+                     <li class="nav-item"> <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Delete Account</button></li>
+
+                  </ul>
+                   <div class="tab-content pt-2">
+                      <div class="tab-pane fade show active profile-overview" id="profile-overview">
+               
+                         <div class="row">
+                            <div class="col-lg-3 col-md-4 label ">Fullname:</div>
+                            <div class="col-lg-9 col-md-8">{{userResponse?.firstName}} - {{ userResponse?.lastName}}</div>
+                         </div>
+                         <div class="row">
+                            <div class="col-lg-3 col-md-4 label">Email:</div>
+                            <div class="col-lg-9 col-md-8">{{userResponse?.email}}</div>
+                         </div>
+                         <div class="row">
+                           <div class="col-lg-3 col-md-4 label">Total Task</div>
+                           <div class="col-lg-9 col-md-8">-</div>
+                        </div>
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label">Completed Task</div>
+                           <div class="col-lg-9 col-md-8">-</div>
+                        </div>
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label">Ongoing Task</div>
+                           <div class="col-lg-9 col-md-8">-</div>
+                        </div>
+
+
+                      </div>
+                      
+                      <div class="tab-pane fade profile-edit pt-3" id="profile-change-password">
+                        <form [formGroup]="changePasswordForm">
+                           <div class="row mb-3">
+                              <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
+                              <div class="col-md-8 col-lg-9">
+                                <div class="input-group">
+                                  <input name="password" [type]="showPassword ? 'text' : 'password'" class="form-control" id="currentPassword" formControlName="oldPassword">
+                                  <div class="input-group-append" (click)="togglePasswordVisibility()">
+                                    <span class="input-group-text password-toggle-icon">
+                                      <fa-icon [icon]="showPassword ? 'eye-slash' : 'eye'"></fa-icon>
+                                    </span>
+                                  </div>
+                                </div>
+                                <div *ngIf="changePasswordForm.get('oldPassword')?.invalid && (changePasswordForm.get('oldPassword')?.dirty || changePasswordForm.get('oldPassword')?.touched)">
+                                  <div *ngIf="changePasswordForm.get('oldPassword')?.errors?.['required']" [style.color]="'red'">This field is required</div>
+                                </div>
+                                <div *ngIf="incorrectPasswordError" [style.color]="'red'">{{ incorrectPasswordError }}</div>
+                              </div>
+                            </div>
+                            
+                            <div class="row mb-3">
+                              <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
+                              <div class="col-md-8 col-lg-9">
+                                <input name="newpassword" [type]="showPassword ? 'text' : 'password'" class="form-control" id="newPassword" formControlName="newPassword" (input)="updateConfirmPassword()">
+                                <div *ngIf="changePasswordForm.get('newPassword')?.invalid && (changePasswordForm.get('newPassword')?.dirty || changePasswordForm.get('newPassword')?.touched)">
+                                  <div *ngIf="changePasswordForm.get('newPassword')?.errors?.['required']" [style.color]="'red'">This field is required</div>
+                                  <div *ngIf="changePasswordForm.get('newPassword')?.errors?.['minlength']" [style.color]="'red'">Minimum length is 6</div>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            <div class="row mb-3">
+                              <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Confirm New Password</label>
+                              <div class="col-md-8 col-lg-9">
+                                <input name="renewpassword" [type]="showPassword ? 'text' : 'password'" class="form-control" id="renewPassword" formControlName="confirmPassword" [disabled]="changePasswordForm.get('newPassword')?.invalid ?? true" (input)="updateConfirmPassword()">
+                                <div *ngIf="changePasswordForm.get('confirmPassword')?.invalid && (changePasswordForm.get('confirmPassword')?.dirty || changePasswordForm.get('confirmPassword')?.touched)">
+                                  <div *ngIf="changePasswordForm.get('confirmPassword')?.errors?.['required']" [style.color]="'red'">This field is required</div>
+                                  <div *ngIf="changePasswordForm.get('confirmPassword')?.errors?.['passwordMismatch']" [style.color]="'red'">Passwords do not match</div>
+                                </div>
+                              </div>
+                            </div>
+                           
+                           
+                           <div class="text-center">
+                             <button type="button" class="btn btn-primary" (click)="changePassword()">Change Password</button>
+                           </div>
+                         </form>
+
+                         <i class="bi bi-info-circle-fill" id="infoIcon" (mouseenter)="showInfoTooltip()" (mouseleave)="hideInfoTooltip()"></i>
+                           <div class="infoTooltip" id="infoTooltip" [ngStyle]="tooltipStyles" [style.color]="'red'" *ngIf="tooltipVisible">{{ tooltipMessage }}</div>
+
+                        
+                      </div>
+
+                      <div class="tab-pane fade pt-3" id="profile-edit">
+                        <p>If you delete this account, there is no turning back. You have to create a new account to use app.</p>
+                        <button type="button" class="btn btn-danger" (click)="deleteAccount(userResponse?.id)" >Delete Account</button>
+                     </div>
+
+                   </div>
+                </div>
+             </div>
+          </div>
+       </div>
+    </section>
+ </main>
