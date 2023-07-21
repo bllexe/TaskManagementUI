@@ -33,7 +33,7 @@ export class TaskService {
 
    //return this.httpClient.get<TaskResponse[]>('http://localhost:8081/api/tasks/byUser/' + userId);
 
-   return this.httpClient.get<TaskResponse[]>(environment.API_BASE_PATH+this.TASK_PATH+'byUser'+userId);
+   return this.httpClient.get<TaskResponse[]>(environment.API_BASE_PATH + this.TASK_PATH + '/byUser' + userId);
 
   }
 
