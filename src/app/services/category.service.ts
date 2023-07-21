@@ -62,7 +62,7 @@ export class CategoryService {
 
   getAllCategoriesByUserId(userId:any):Observable<any[]>{
     //return this.httpClient.get<any[]>('http://localhost:8081/api/categories/all/' + userId);
-    return this.httpClient.get<any[]>(environment.API_BASE_PATH + this.createCategory + '/all/' + userId);
+    return this.httpClient.get<any[]>(environment.API_BASE_PATH + this.CATEGORY_PATH + '/all/' + userId);
   }
 
   getAllTaskByCategoriesId(categoryId: HttpParams | undefined):Observable<any>{
