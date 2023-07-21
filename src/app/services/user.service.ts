@@ -22,7 +22,7 @@ export class UserService {
 
 
   getCurrentUser(id:any): Observable<UserResponse> {
-    return this.httpClient.get<UserResponse>('http://localhost:8081/api/users/' + id);
+    //return this.httpClient.get<UserResponse>('http://localhost:8081/api/users/' + id);
 
     return this.httpClient.get<UserResponse>(environment.API_BASE_PATH + this.USER_PATH + '/' +id);
       

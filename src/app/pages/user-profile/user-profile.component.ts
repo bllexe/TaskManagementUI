@@ -54,7 +54,7 @@ export class UserProfileComponent implements OnInit {
     this.getCurrentUser();
   }
 
-  //sifre degistirme
+  
 
   getCurrentUser() {
     const id = this.authService.getUserId();
