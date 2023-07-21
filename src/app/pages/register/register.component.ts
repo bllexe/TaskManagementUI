@@ -56,14 +56,12 @@ export class RegisterComponent implements OnInit {
         (data) => {
           this.router.navigate(['/pages-login']);
           this.toastr.success('User registered succesfully.');
-          //todo bu kullanici zaten varsa ekranda bu kullanici zaten var uyarisi gosterilecek
-          //todo email confirmation
-          
+    
         },
         (error) => {
-          this.error = error;
+          this.error = "Server Issue!! An Error Occured!! Try Later";
           this.loading = false;
-          this.toastr.error("an error occured!! try later" + error)
+          this.toastr.error("Server Issue!! An Error Occured!! Try Later" );
         }
       );
   }

@@ -3,6 +3,7 @@ import { ApiService } from './api.service';
 import { Observable,map } from 'rxjs';
 import { CategoryDto } from '../model/category-dto';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable({
@@ -60,7 +61,8 @@ export class CategoryService {
   // }
 
   getAllCategoriesByUserId(userId:any):Observable<any[]>{
-    return this.httpClient.get<any[]>('http://localhost:8081/api/categories/all/' + userId);
+    //return this.httpClient.get<any[]>('http://localhost:8081/api/categories/all/' + userId);
+    return this.httpClient.get<any[]>(environment.API_BASE_PATH + this.createCategory + '/all/' + userId);
   }
 
   getAllTaskByCategoriesId(categoryId: HttpParams | undefined):Observable<any>{

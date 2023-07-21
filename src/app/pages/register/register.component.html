@@ -65,18 +65,11 @@
                               </div>
                             </div>
 
-                          <div class="col-12">
-                             <div class="form-check">
-                                <input class="form-check-input" name="terms" type="checkbox" value="" id="acceptTerms" required> <label class="form-check-label" for="acceptTerms">I agree and accept the <a href="#">terms and conditions</a></label>
-                                <div  class="invalid-feedback">You must agree before submitting.</div>
-                             </div>
-                          </div>
-
                           <div class="col-12"> <button class="btn btn-primary w-100" type="submit" [disabled]="loading">Create Account</button></div>
                           <div class="col-12">
                              <p class="small mb-0">Already have an account? <a [routerLink]="['/pages-login']">Log in</a></p>
                           </div>
-                          <div *ngIf="error" class="alert alert-light border-light alert-dismissible fade show"> {{ error }}</div>
+                          <div *ngIf="error" class="alert alert-light border-light alert-dismissible fade show" style="color: red;"> {{ error }}</div>
 
                        </form>
                     </div>

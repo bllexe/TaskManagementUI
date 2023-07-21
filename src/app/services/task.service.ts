@@ -4,6 +4,7 @@ import { TaskDto } from '../model/task-dto';
 import { ApiService } from './api.service';
 import { TaskResponse } from '../model/task-response';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +31,9 @@ export class TaskService {
 
   getAllTaskByUserId(userId:any):Observable<TaskResponse[]>{
 
-   return this.httpClient.get<TaskResponse[]>('http://localhost:8081/api/tasks/byUser/' + userId);
+   //return this.httpClient.get<TaskResponse[]>('http://localhost:8081/api/tasks/byUser/' + userId);
+
+   return this.httpClient.get<TaskResponse[]>(environment.API_BASE_PATH+this.TASK_PATH+'byUser'+userId);
 
   }
 
@@ -62,14 +65,18 @@ export class TaskService {
 
   getAllTaskByCategoryName(){
 
+    //todo
+
   }
   getAllTaskByStatus(){
+    //todo
 
   }
   getAllTaskBySeverity(){
+    //todo
 
   }
   getTaskCountByUserId(){
-    
+    //todo
   }
 }

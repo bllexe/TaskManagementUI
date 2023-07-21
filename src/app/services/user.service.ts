@@ -19,36 +19,15 @@ export class UserService {
   constructor(private apiService: ApiService,private authService:AuthenticationService,
     private httpClient:HttpClient) {}
 
-  // getAll(): Observable<any> {
-  //   return this.apiService.get(this.USER_PATH).pipe(
-  //     map((res) => {
-  //       if (res) {
-  //         return res;
-  //       } else {
-  //         console.log(res);
-  //         return {};
-  //       }
-  //     })
-  //   );
-  // }
+
 
   getCurrentUser(id:any): Observable<UserResponse> {
     return this.httpClient.get<UserResponse>('http://localhost:8081/api/users/' + id);
+
+    return this.httpClient.get<UserResponse>(environment.API_BASE_PATH + this.USER_PATH + '/' +id);
       
   }
 
-  // createUser(userDto: HttpParams | undefined): Observable<UserDto> {
-  //   return this.apiService.post(this.USER_PATH,userDto).pipe(map(
-  //     res=>{
-  //       if(res){
-  //         return res;
-  //       }else{
-  //         console.log(res);
-  //         return {};
-  //       }
-  //     }
-  //   ));
-  // }
 
   changePassword(id:number,changePasswordRequest:any):Observable<any>{
     return this.apiService.put(this.USER_PATH +'/password/' + id,changePasswordRequest).pipe(map(
